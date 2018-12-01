@@ -42,14 +42,14 @@ public class Driver {
 			dataGroup3[0] = rand.nextInt(40) + 200.0; // 30-49
 			dataGroup3[1] = rand.nextInt(40) + 10.0; // 30-49
 			
-			point = new DataPoint(dataGroup1);
-			graph.add(point);
-			
-			point= new DataPoint(dataGroup2);
-			graph.add(point);
-			
-			point= new DataPoint(dataGroup3);
-			graph.add(point);
+//			point = new DataPoint(dataGroup1);
+//			graph.add(point);
+//			
+//			point= new DataPoint(dataGroup2);
+//			graph.add(point);
+//			
+//			point= new DataPoint(dataGroup3);
+//			graph.add(point);
 		}
 		
 		// new GraphFrame(graph);

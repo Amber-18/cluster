@@ -62,5 +62,17 @@ public class Cluster {
 		this.points.clear();
 		
 	}
+	
+	/** Returns a double[] of all the answers of every data point in this cluster*/
+
+	public double[] getAnswers() {
+		double[] answers = new double[this.points.size()];
+		
+		for(int i = 0; i < answers.length; ++i) {
+			answers[i] = this.points.get(i).getAnswer();
+		}
+		
+		return answers;
+	}
 
 }

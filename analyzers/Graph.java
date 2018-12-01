@@ -123,4 +123,10 @@ public class Graph {
 	public ArrayList<DataPoint> getAllPoints() {
 		return this.allPoints;
 	}
+	
+	public void analysisToString() {
+		for(Cluster cluster : this.clusters) {
+			System.out.println(Arrays.toString(cluster.getAnswers()));
+		}
+	}
 }
