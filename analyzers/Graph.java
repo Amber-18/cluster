@@ -1,6 +1,7 @@
 package analyzers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Graph {
@@ -11,7 +12,7 @@ public class Graph {
 	
 	private ArrayList<DataPoint> allPoints = new ArrayList<>();
 	
-	/** Constructs a Graph object
+	/** Constructs a Graph object and randomizes the center for each cluster created by the graph
 	 * GraphLimits are the same for every graphical dimensions
 	 * GraphLimits are limits on every value in a data point
 	 * @param numClusters The number of clusters to be expected
@@ -50,9 +51,10 @@ public class Graph {
 		
 	}
 	
+	/** Add a point to this graph, add that point to a cluster, and increment the calibrationMeter*/
 	public void add(DataPoint point) {
 		allPoints.add(point); // add points to set of all points
-
+		
 		calibratePoint(point);
 		
 		this.calibrationMeter += 1;
@@ -62,23 +64,44 @@ public class Graph {
 		}
 		
 	}
-
+	
+	/** Returns a list of the centers of the clusters*/
+	public ArrayList<Center> getCenters() {
+		ArrayList<Center> centers = new ArrayList<>();
+		
+		for(Cluster cluster : this.clusters) {
+			centers.add(cluster.getCenter());
+		}
+		
+		return centers;
+	}
+	
+	/** Calibrates the entire graph, called by the calibration meter
+	 * Calibrates the center of each cluster
+	 * Calibrates each point in the graph
+	 * And then calibrates the centers, again*/
 	private void calibration() {
 		
 		for(Cluster cluster : this.clusters) {
 			cluster.recalibrate();
+			cluster.clear();
 		}
 		
 		for(DataPoint point : allPoints) {
 			calibratePoint(point);
 		}
 		
+		for(Cluster cluster : this.clusters) {
+			cluster.recalibrate();
+		}
+		
 	}
-
+	
+	/** Takes a single point and add it the cluster whose center this point is closest to*/
 	private void calibratePoint(DataPoint point) {
 		double distance;
 		double minimum = 1000000000;
-		int j = 0;
+		int indexOfMin = 0;
 		
 		// iterate through all clusters to find which center has least distance to this point
 		for(int i = 0; i < this.clusters.size(); ++i) {
@@ -86,13 +109,18 @@ public class Graph {
 			distance = point.distanceFrom(cluster.getCenter());
 			
 			if(distance < minimum) {
-				j = i;
+				minimum = distance;
+				indexOfMin = i;
 			}
 		}
 		
 		// add point to the cluster whose center was least distant
-		this.clusters.get(j).addPoint(point);
+		this.clusters.get(indexOfMin).addPoint(point);
 		
 	}
-
+	
+	/** Returns a list of all points on this graph*/
+	public ArrayList<DataPoint> getAllPoints() {
+		return this.allPoints;
+	}
 }

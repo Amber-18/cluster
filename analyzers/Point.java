@@ -18,14 +18,16 @@ public abstract class Point {
 	 * @param point2 the other data point*/
 	protected double distanceFrom(Point point2) {
 		double[] thatVector = point2.getVector();
-		double distance = -1;
+		double distance = 0;
+		double sum = 0;
 		
 		for(int i = 0; i < thatVector.length; ++i) {
-			distance = this.vector[i] - thatVector[i];
+			distance = (this.vector[i] - thatVector[i]);
 			distance = distance * distance;
+			sum += distance;
 		}
 		
-		distance = Math.sqrt(distance);
+		distance = Math.sqrt(sum);
 		
 		return distance;
 		
