@@ -45,7 +45,7 @@ public class Graph {
 			}
 			
 			// hope that the centers are far enough apart!!
-			clusters.add(new Cluster(new Center(centerPointVector)));
+			clusters.add(new Cluster(new Center(centerPointVector), i));
 		}
 		
 		
@@ -58,7 +58,7 @@ public class Graph {
 		calibratePoint(point);
 		
 		this.calibrationMeter += 1;
-		if(this.calibrationMeter == 5) {
+		if(this.calibrationMeter % 5 == 0) {
 			this.calibrationMeter = 0;
 			calibration();
 		}
@@ -126,7 +126,73 @@ public class Graph {
 	
 	public void analysisToString() {
 		for(Cluster cluster : this.clusters) {
-			System.out.println(Arrays.toString(cluster.getAnswers()));
+			//System.out.println(Arrays.toString(cluster.getAnswers()));
+		}
+	}
+	
+	public void runAgain() {
+		
+		this.clusters = new ArrayList<>();
+		this.allPoints = new ArrayList<>();
+		this.calibrationMeter = 0;
+		Random rand = new Random();
+		ArrayList<Double> potentials = new ArrayList<>();
+		
+		int upperGraphLimit = 300;
+		int lowerGraphLimit = 0;
+		int numClusters = 3;
+		int numDimensions = 2;
+		
+		// calculate the lower potential value for a center evenly spaced within the graph
+		double range = upperGraphLimit - lowerGraphLimit;
+		range = range / ((double)numClusters + 1.0);
+		
+		// calculate all potential values and add them to a list
+		while(range < upperGraphLimit) {
+			potentials.add(new Double(range));
+			range += range;
+		}
+		
+		// for every center point
+		for(int i = 0; i < numClusters; ++i) {
+			// for every dimension that center point has
+			double[] centerPointVector = new double[numDimensions];
+			for(int j = 0; j < numDimensions; ++j) {
+				centerPointVector[j] = potentials.get(rand.nextInt(potentials.size()));
+			}
+			
+			// hope that the centers are far enough apart!!
+			clusters.add(new Cluster(new Center(centerPointVector), i));
+		}
+		
+		ArrayList<DataPoint> points = new ArrayList<>();
+		DataPoint point;
+		double[] dataGroup1;
+		double[] dataGroup2;
+		double[] dataGroup3;
+		
+		for(int i = 0; i < (30); ++i) {
+			
+			dataGroup1 = new double[2];
+			dataGroup1[0] = rand.nextInt(10) + 280.0; // 280-289
+			dataGroup1[1] = rand.nextInt(30) + 270.0; // 270-300
+			
+			dataGroup2 = new double[2];
+			dataGroup2[0] = rand.nextInt(40) + 100.0; // 100-139
+			dataGroup2[1] = rand.nextInt(30) + 200.0; // 200-229
+			
+			dataGroup3 = new double[2];
+			dataGroup3[0] = rand.nextInt(40) + 200.0; // 200-239
+			dataGroup3[1] = rand.nextInt(10) + 10.0; // 10-19
+			
+			point = new DataPoint(dataGroup1);
+			add(point);
+			
+			point= new DataPoint(dataGroup2);
+			add(point);
+			
+			point= new DataPoint(dataGroup3);
+			add(point);
 		}
 	}
 }

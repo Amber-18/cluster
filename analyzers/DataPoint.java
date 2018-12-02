@@ -13,6 +13,14 @@ public class DataPoint extends Point{
 		this.answer = answer;
 	}
 	
+	/**@param vector The vector
+	 * @param distance Distance from center point of group this belongs to*/
+	public DataPoint(double[] vector) {
+		super(vector);
+		
+		this.answer = -1.0;
+	}
+	
 	public double getAnswer() {
 		return this.answer;
 	}

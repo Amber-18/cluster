@@ -7,13 +7,16 @@ public class Cluster {
 	
 	private ArrayList<DataPoint> points;
 	
+	private int id;
+	
 	private Center center;
 	
 	/** Construct a cluster
 	 * @param center The center point of this cluster*/
-	public Cluster(Center center) {
+	public Cluster(Center center, int id) {
 		this.points = new ArrayList<>();
 		this.center = center;
+		this.id = id;
 	}
 	
 	/** Return the Center of this cluster*/
@@ -24,6 +27,7 @@ public class Cluster {
 	/** Add a point to this cluster*/
 	public void addPoint(DataPoint point) {
 		this.points.add(point);
+		point.set(this.id);
 		
 	}
 	

@@ -37,17 +37,16 @@ public class GraphicPoint extends JPanel{
 			x = (int)vector[0];
 			y = (int)vector[1];
 			
+			g.setColor(Color.BLACK);
 			g.fillRect(x, y, 5, 5);
 			
 		}
 		
-		g.setColor(Color.magenta);
+		g.setColor(Color.MAGENTA);
 		
 		for(Center center : graph.getCenters()) {
 			
 			vector = center.getVector();
-			
-			System.out.println(Arrays.toString(vector));
 			
 			x = (int)vector[0];
 			y = (int)vector[1];

@@ -4,6 +4,8 @@ public abstract class Point {
 	
 	protected double[] vector;
 	
+	protected int id;
+	
 	/**@param vector The vector
 	 * @param distance Distance from center point of group this belongs to*/
 	public Point(double[] vector) {
@@ -12,6 +14,14 @@ public abstract class Point {
 	
 	public double[] getVector() {
 		return this.vector;
+	}
+	
+	public void set(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 	
 	/** Calculate distance from this point to another data point
